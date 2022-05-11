@@ -5,20 +5,18 @@ using UnityEngine.UI;
 
 public class SPText : MonoBehaviour
 {
-    PlayerController player;
-    Text mySP;
-    public RectTransform rectSP;
+    public PlayerController player;
+    public Text mySP;
+    public Image rectSP;
 
     private void Start()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerController>();
-        mySP = GetComponent<Text>();
     }
 
     
     void Update()
     {
-        rectSP.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (player.sp / player.spMax) * 190);
+        rectSP.fillAmount = (player.sp / player.spMax);
         mySP.text = ((int)(player.sp)) + " / " + player.spMax;
     }
 }

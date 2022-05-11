@@ -5,20 +5,18 @@ using UnityEngine.UI;
 
 public class HPText : MonoBehaviour
 {
-    PlayerController player;
-    Text myHP;
-    public RectTransform rectHP;
+    public PlayerController player;
+    public Text myHP;
+    public Image rectHP;
     
     private void Start()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerController>();
-        myHP =  GetComponent<Text>();
     }
 
     
     void Update()
     {
-        rectHP.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (player.hp/player.hpMax)*190);
+        rectHP.fillAmount = (player.hp / player.hpMax);
         myHP.text = ((int)player.hp) + " / " + player.hpMax;
     }
 }

@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 public class CameraController : MonoBehaviourPunCallbacks
 {
-    public PhotonView PV;
+    //public PhotonView PV;
 
     
     public GameObject target;
@@ -23,10 +23,8 @@ public class CameraController : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (PV.IsMine)
-        {
-            CameraMove();
-        }
+        
+        CameraMove();
     }
 
     void CameraMove()

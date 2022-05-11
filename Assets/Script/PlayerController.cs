@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
             Transparent = false;
             itemBool = false;
             curse = 0;
-            
+            StartCoroutine(HpM());
         }
     }
 
@@ -87,10 +87,12 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
         //HPBar
         Vector3 hpDir = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0)) - m_HP.transform.position;//È­Áú ¾È¸ÂÀ¸¸é ±úÁü
         m_HP.transform.Translate(hpDir);
-        m_HPBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (hp / hpMax) * 120);
+        m_HPBar.fillAmount = (hp / hpMax);
         //NickName
         Vector3 nameDir = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0)) - NickName.transform.position;
         NickName.transform.Translate(nameDir);
+
+        
 
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
@@ -352,5 +354,14 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
             yield return new WaitForSeconds(0.01f);
         }
         Destroy(other.gameObject);
+    }
+
+    IEnumerator HpM()
+    {
+        while (true)
+        {
+            hp--;
+            yield return new WaitForSeconds(1f);
+        }
     }
 }

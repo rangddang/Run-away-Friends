@@ -9,8 +9,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public InputField NickNameInput;
     public GameObject DisconnectPanel;
-    public GameObject cam;
-    public CameraController camCon;
+    public GameObject PlayerUI;
 
 
     void Awake()
@@ -32,13 +31,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         DisconnectPanel.SetActive(false);
-        cam.SetActive(false);
         Spawn();
     }
 
     public void Spawn()
     {
         PhotonNetwork.Instantiate("Player", new Vector3(0, 2, 0), Quaternion.identity);
-        
+        PlayerUI.SetActive(true);
     }
 }

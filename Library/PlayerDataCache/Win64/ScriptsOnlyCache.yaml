@@ -112,9 +112,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1452}
     - Class: 114
-      Script: {instanceID: 1552}
+      Script: {instanceID: 1456}
     - Class: 114
-      Script: {instanceID: 1694}
+      Script: {instanceID: 1554}
     - Class: 114
       Script: {instanceID: 1724}
     - Class: 114
@@ -226,6 +226,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Toggle
+  - hash:
+      serializedVersion: 2
+      Hash: 21a9c6dbf300fc1f6dc15ca7e2c39a37
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Slider
   - hash:
       serializedVersion: 2
       Hash: 24f79094aff162c9aa69c31d64d777d3
@@ -346,12 +352,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: Photon.Chat.UtilityScripts
     className: TextButtonTransition
-  - hash:
-      serializedVersion: 2
-      Hash: 21a9c6dbf300fc1f6dc15ca7e2c39a37
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Slider
   - hash:
       serializedVersion: 2
       Hash: 3164bc883ff663a5cdb32d1ef7e7c0c5
@@ -1164,7 +1164,7 @@ ScriptsOnlyBuild:
     className: AutoSyncSceneToggle
   - hash:
       serializedVersion: 2
-      Hash: 6d2b0977ee193665f5102de4a2f091bb
+      Hash: 7e844ac2317e9f7ad3af524b9351f3f5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NetworkManager
@@ -1230,7 +1230,7 @@ ScriptsOnlyBuild:
     className: CreateRoomUiForm
   - hash:
       serializedVersion: 2
-      Hash: 2b29d335da42c7c6dac94b8dc2721ef3
+      Hash: 71021a03b3de0e73b9994c4073f4f408
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraController

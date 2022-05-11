@@ -6,13 +6,12 @@ using UnityEngine.UI;
 public class ItemImage : MonoBehaviour
 {
     public Texture[] item ;
-    PlayerController player;
+    public PlayerController player;
     RawImage image;
 
 
     private void Start()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerController>();
         image = GetComponent<RawImage>();
 
         image.texture = (Texture)item[0];
