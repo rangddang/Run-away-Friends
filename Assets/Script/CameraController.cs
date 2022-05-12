@@ -6,9 +6,6 @@ using Photon.Realtime;
 
 public class CameraController : MonoBehaviourPunCallbacks
 {
-    //public PhotonView PV;
-
-    
     public GameObject target;
 
     public float turnSpeed;
@@ -35,7 +32,6 @@ public class CameraController : MonoBehaviourPunCallbacks
 
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, turnSpeed * Time.deltaTime);
 
-        //Dir = player.moveVec;
         Vector3 dir = (target.transform.position + offset - transform.position) * 0.2f;
         transform.position += dir;
     }

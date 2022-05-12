@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class SPText : MonoBehaviour
+public class SPText : MonoBehaviourPunCallbacks
 {
     public PlayerController player;
     public Text mySP;

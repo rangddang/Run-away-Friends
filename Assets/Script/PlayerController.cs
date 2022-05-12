@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     public PhotonView PV;
 
@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
     public GameObject trap;
     public GameObject spider;
     public GameObject rope;
+    public Camera cam;
 
     public float speed;
     float playerSpeed;
@@ -32,12 +33,14 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
     bool chestBool;
     float chestMax;
     float chestMin;
-    bool Transparent;
-    bool itemBool;
     int curse;//저주
+    public bool isMonster;
+    public bool isInvisible;
+    public bool isBush;
 
     public Vector3 moveVec;
     public Vector3 dir;
+    Vector3 curPos;
 
     private void Awake()
     {
@@ -55,7 +58,9 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
         m_HPBar.color = PV.IsMine ? Color.green : Color.red;
         if (PV.IsMine)
         {
-            //item = 7;
+            item = 1;
+            isMonster = false;
+            isInvisible = false;
             maxSpeed = speed;
             playerSpeed = speed;
             spMax = 60;
@@ -65,10 +70,7 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
             chestBool = false;
             chestMax = 2;
             //Chest.SetActive(false);
-            Transparent = false;
-            itemBool = false;
             curse = 0;
-            StartCoroutine(HpM());
         }
     }
 
@@ -79,51 +81,35 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
         {
             MovePlayer();
             Item();
+            Monster();
+            BarManager();
         }
+        //Invisible();
+        //else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
+        //else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
     }
 
     void MovePlayer()
     {
-        //HPBar
-        Vector3 hpDir = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0)) - m_HP.transform.position;//화질 안맞으면 깨짐
-        m_HP.transform.Translate(hpDir);
-        m_HPBar.fillAmount = (hp / hpMax);
-        //NickName
-        Vector3 nameDir = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0)) - NickName.transform.position;
-        NickName.transform.Translate(nameDir);
-
-        
-
+        //X Z
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-
-
         moveVec = new Vector3(x, 0, y).normalized;
-        if (x != 0 || y != 0)
-        {
-            dir = new Vector3(x, 0, y);
-            
-        }
-            
-
+        if (x != 0 || y != 0) dir = new Vector3(x, 0, y);
 
         //Run
         if (Input.GetKey(KeyCode.LeftShift) && sp > 0 && (x != 0 || y != 0))
         {
             playerSpeed = speed * 1.7f;
-            sp -= 15 * Time.deltaTime;
+            sp -= 13f * Time.deltaTime;
             if (sp < 0) sp = 0;
         }
         else playerSpeed = speed * 1;
 
-        RaycastHit ray;
-
         //Move
+        RaycastHit ray;
         if (Physics.Raycast(transform.position + moveVec * 0.3f, Vector3.down, out ray, 6))
-        {
             transform.Translate(moveVec * playerSpeed * Time.deltaTime);
-        }
-            
         //Debug.DrawRay(transform.position + moveVec * 0.3f, Vector3.down * 6, Color.blue, 0.3f);
 
 
@@ -157,38 +143,66 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
             Debug.Log("아이템" + item + "번 사용");
             switch (item)
             {
-                case 1://Stun trap
-                    itemBool = false;
-                    GameObject instance = Instantiate(trap, transform.position - new Vector3(0, 1f, 0), Quaternion.Euler(0, 45, 0));
+                case 1://Stun Trap
+                    PhotonNetwork.Instantiate("Stun Trap", transform.position - new Vector3(0, 1f, 0), Quaternion.Euler(0, 45, 0));
                     break;
-                case 2://Spider web
-                    itemBool = false;
-                    GameObject instance1 = Instantiate(spider, transform.position - new Vector3(0, 1f, 0), Quaternion.Euler(0, 45, 0));
+                case 2://Spider Web
+                    PhotonNetwork.Instantiate("Spider Web", transform.position - new Vector3(0, 1f, 0), Quaternion.Euler(0, 45, 0));
                     break;
                 case 3://Skateboard
                     StartCoroutine(Fast());
                     break;
                 case 4://SpAdd
-                    sp += 50;
-                    if (sp > 60) sp = 60;
+                    StartCoroutine(SPAdd(50));
                     break;
                 case 5://HpAdd
-                    hp += 10;
-                    if (hp > 50) hp = 50;
+                    StartCoroutine(HPAdd(10));
                     break;
                 case 6://Invisible
-                    StartCoroutine(Invisible());
+                    StartCoroutine(Invis());
                     break;
                 case 7://Rope
-                    itemBool = false;
-                    GameObject instance2 = Instantiate(rope, transform.position, Quaternion.Euler(new Vector3(90, (dir.x) * 90, 0)));
+                    PhotonNetwork.Instantiate("Rope", transform.position + (dir.normalized * 1.5f), Quaternion.identity/*Euler(new Vector3(90, (dir.x) * 90, 0))*/)
+                        .GetComponent<PhotonView>().RPC("DirRPC", RpcTarget.All, dir.normalized);
                     break;
 
 
             }
-            item = 0;
+            //item = 0;
 
         }
+    }
+
+    void Monster()
+    {
+        if (isMonster)
+        {
+            hp -= 1 * Time.deltaTime;
+        }
+    }
+
+    void Invisible()
+    {
+        if (isInvisible)
+        {
+            renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, 0.5f);
+        }
+        else
+        {
+            renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, 1f);
+        }
+    }
+
+    void BarManager()
+    {
+        //HPBar
+        Vector3 hpDir = cam.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0)) - m_HP.transform.position;
+        m_HP.transform.Translate(hpDir);
+        m_HPBar.fillAmount = (hp / hpMax);
+
+        //NickName
+        //Vector3 nameDir = cam.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0)) - NickName.transform.position;
+        //NickName.transform.Translate(nameDir);
     }
 
 
@@ -204,9 +218,10 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
             }
             if (other.gameObject.tag == "SP" && sp < spMax)
             {
+
                 reSpawnSec = 20f;
                 StartCoroutine(Respawn(other, reSpawnSec));
-                sp += 6;
+                StartCoroutine(SPAdd(6));
                 if (sp > spMax) sp = spMax;
             }
             if (other.gameObject.tag == "Chest")
@@ -224,46 +239,6 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
                 chestMax = 3.5f;
                 chest = other;
                 chestBool = true;
-            }
-            if (other.gameObject.tag == "Trap")
-            {
-                if (itemBool == true)
-                {
-                    itemBool = false;
-                    Destroy(other.gameObject);
-                    StartCoroutine(Stun());
-                }
-                else
-                {
-                    itemBool = true;
-                }
-            }
-            if (other.gameObject.tag == "SpiderWeb")
-            {
-                if (itemBool == true)
-                {
-                    itemBool = false;
-                    Destroy(other.gameObject);
-                    StartCoroutine(Slow());
-                }
-                else
-                {
-                    itemBool = true;
-                }
-            }
-            if (other.gameObject.tag == "Rope")
-            {
-                if (itemBool == true)
-                {
-                    itemBool = false;
-                    Destroy(other.gameObject);
-                    StartCoroutine(Slow());
-                }
-                else
-                {
-                    StartCoroutine(RopeMove(other, dir));
-                    itemBool = true;
-                }
             }
         }
     }
@@ -286,8 +261,8 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
             }
             if (other.gameObject.tag == "Bush")
             {
-                if (Transparent == false)
-                    renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, 1f);
+                isBush = false;
+                isInvisible = false;
             }
         }
     }
@@ -298,11 +273,16 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
         {
             if (other.gameObject.tag == "Bush")
             {
-                renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, 0.5f);
+                isBush = true;
+                isInvisible = true;
             }
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
     IEnumerator Stun()
     {
         speed = 0f;
@@ -329,13 +309,11 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
         speed = maxSpeed;
         playerSpeed = speed * 1;
     }
-    IEnumerator Invisible()
+    IEnumerator Invis()
     {
-        Transparent = true;
-        renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, 0.5f);
+        isInvisible = true;
         yield return new WaitForSeconds(5f);
-        Transparent = false;
-        renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, 1f);
+        isInvisible = false;
     }
 
     IEnumerator Respawn(Collider other, float reSpawnSec)
@@ -345,23 +323,39 @@ public class PlayerController : MonoBehaviourPunCallbacks//, IPunObservable
         other.gameObject.SetActive(true);
     }
 
-    IEnumerator RopeMove(Collider other, Vector3 d)
+    IEnumerator SPAdd(float value)
     {
-        d = d.normalized;
-        for (int i = 0; i < 300; i++)
+        for(int i = 0; i < value * 2; i++)
         {
-            other.gameObject.transform.position += d * 0.5f;
             yield return new WaitForSeconds(0.01f);
+            sp += 0.5f;
+            if (sp > spMax) sp = spMax;
         }
-        Destroy(other.gameObject);
     }
 
-    IEnumerator HpM()
+    IEnumerator HPAdd(float value)
     {
-        while (true)
+        for (int i = 0; i < value * 2; i++)
         {
-            hp--;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.01f);
+            hp += 0.5f;
+            if (hp > hpMax) hp = hpMax;
         }
     }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(m_HPBar.fillAmount);
+        }
+        else
+        {
+            curPos = (Vector3)stream.ReceiveNext();
+            m_HPBar.fillAmount = (float)stream.ReceiveNext();
+        }
+    }
+
+
 }

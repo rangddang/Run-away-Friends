@@ -3,9 +3,14 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - CameraController
     - GameManager
+    - HPText
     - ItemImage
     - NetworkManager
     - PlayerController
+    - RopeMove
+    - SPText
+    - SpiderWeb
+    - StunTrap
     PhotonUnityNetworking.Demos.dll:
     - Photon.Pun.Demo.Asteroids.Asteroid
     - Photon.Pun.Demo.Asteroids.Bullet
@@ -26,7 +31,6 @@ ScriptsOnlyBuild:
     - Photon.Pun.ServerSettings
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
-    - UnityEditor.Tilemaps.GridBrushEditor
     - UnityEditor.Tilemaps.GridPaintPaletteClipboard
     - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
@@ -126,6 +130,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2278}
     - Class: 114
+      Script: {instanceID: 2410}
+    - Class: 114
       Script: {instanceID: 2480}
     - Class: 114
       Script: {instanceID: 2604}
@@ -133,6 +139,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 2790}
     - Class: 114
       Script: {instanceID: 2838}
+    - Class: 114
+      Script: {instanceID: 2934}
     - Class: 114
       Script: {instanceID: 3004}
     - Class: 114
@@ -169,6 +177,12 @@ ScriptsOnlyBuild:
       Script: {instanceID: 4722}
     - Class: 114
       Script: {instanceID: 5040}
+    - Class: 114
+      Script: {instanceID: 19982}
+    - Class: 114
+      Script: {instanceID: 150084}
+    - Class: 114
+      Script: {instanceID: 150100}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -576,7 +590,7 @@ ScriptsOnlyBuild:
     className: PhotonHandler
   - hash:
       serializedVersion: 2
-      Hash: fc6c8c2d025dbc80c67b7eff7eea229e
+      Hash: 1d91484e2112fc6dfd938118b35a64f2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SPText
@@ -768,7 +782,7 @@ ScriptsOnlyBuild:
     className: SplinePosition
   - hash:
       serializedVersion: 2
-      Hash: e546af41d652abeb916fababcb5e59e8
+      Hash: d14b2a56c84326474c9e572693610b82
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: HPText
@@ -972,7 +986,7 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 6ea4f92eb26cb4fc4e5fa54c590a876c
+      Hash: 500bebd5b80dd3761829048522ed6962
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ItemImage
@@ -1164,7 +1178,7 @@ ScriptsOnlyBuild:
     className: AutoSyncSceneToggle
   - hash:
       serializedVersion: 2
-      Hash: 7e844ac2317e9f7ad3af524b9351f3f5
+      Hash: a0f9b9b965a9896d439d132257398ff8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NetworkManager
@@ -1356,7 +1370,7 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: 103e663159723e403009eaf48e9c5b9f
+      Hash: a4cb5e5aead17e8c4ac6cb379ebb9c2b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -1636,6 +1650,24 @@ ScriptsOnlyBuild:
     assemblyName: PhotonUnityNetworking.Demos.dll
     namespaceName: Photon.Pun.Demo.Cockpit.Forms
     className: UserIdUiForm
+  - hash:
+      serializedVersion: 2
+      Hash: 5a61dadeddeb6b88d4ab23f3f0fa8379
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RopeMove
+  - hash:
+      serializedVersion: 2
+      Hash: 5a61dadeddeb6b88d4ab23f3f0fa8379
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SpiderWeb
+  - hash:
+      serializedVersion: 2
+      Hash: 5a61dadeddeb6b88d4ab23f3f0fa8379
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StunTrap
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

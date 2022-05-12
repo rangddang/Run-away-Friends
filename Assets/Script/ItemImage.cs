@@ -13,7 +13,6 @@ public class ItemImage : MonoBehaviour
     private void Start()
     {
         image = GetComponent<RawImage>();
-
         image.texture = (Texture)item[0];
     }
 

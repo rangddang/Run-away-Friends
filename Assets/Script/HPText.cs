@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class HPText : MonoBehaviour
+public class HPText : MonoBehaviourPunCallbacks
 {
     public PlayerController player;
     public Text myHP;

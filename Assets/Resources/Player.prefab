@@ -28,12 +28,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4090756491758127162}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4090756493566902146}
-  m_RootOrder: 1
+  m_Father: {fileID: 4090756492103284816}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -202,12 +202,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 66efb24ed46044ab8a039599cbc47d7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6c7534c17fa737043a0adcf35478190f, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -259,6 +259,7 @@ RectTransform:
   m_Children:
   - {fileID: 4090756492514065954}
   - {fileID: 4090756493519359316}
+  - {fileID: 4090756491758127158}
   m_Father: {fileID: 4090756493566902146}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -424,7 +425,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6c7534c17fa737043a0adcf35478190f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -521,12 +522,16 @@ MonoBehaviour:
   trap: {fileID: 7858802537740289245, guid: 69ad90d58d0362542a9633abe526ba19, type: 3}
   spider: {fileID: 7080784428086949336, guid: bab229381975a824bb41b8369690e259, type: 3}
   rope: {fileID: 8975634119442226205, guid: c6151ac4f3f40b94aa40fb187e318c10, type: 3}
+  cam: {fileID: 0}
   speed: 4
   sp: 0
   spMax: 0
   hp: 0
   hpMax: 0
   item: 0
+  isMonster: 0
+  isInvisible: 0
+  isBush: 0
   moveVec: {x: 0, y: 0, z: 0}
   dir: {x: 0, y: 0, z: 0}
 --- !u!33 &4090756493003967430
@@ -714,7 +719,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4090756492103284816}
-  - {fileID: 4090756491758127158}
   m_Father: {fileID: 4090756493003967431}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
