@@ -1,2 +1,2 @@
-# Run-away-Friends
-Make a 'Run away Friends' Remake
+# 도망가 친구들3D
+'도망가 친구들'을 3D로 리메이크
