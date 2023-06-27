@@ -11,7 +11,11 @@ public class RopeMove : MonoBehaviourPunCallbacks
 
     void Start() => Destroy(gameObject, 3.5f);
 
-    private void Update() => transform.Translate(dir * 15f * Time.deltaTime);
+    private void Update()
+    {
+        transform.up = dir;
+        transform.position += (dir * 15f * Time.deltaTime);
+    }
 
     private void OnTriggerEnter(Collider other)
     {

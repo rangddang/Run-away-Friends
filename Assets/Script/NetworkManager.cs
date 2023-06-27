@@ -68,6 +68,5 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SPText.GetComponent<SPText>().player = player.GetComponent<PlayerController>();
         ItemImage.GetComponent<ItemImage>().player = player.GetComponent<PlayerController>();
         player.GetComponent<PlayerController>().cam = Cam;
-
     }
 }
